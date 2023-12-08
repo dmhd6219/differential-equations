@@ -90,7 +90,7 @@ Write a computer program in the C++ programming language that solves
 </p>
 
 <p align="center">
-  <img src="./readme-files/task2_2.svg" alt="Equation 2 Interval" width="200px">
+  <img src="./readme-files/task2_2.svg" alt="Equation 2 Interval" width="400px">
 </p>
 
 <ul>
