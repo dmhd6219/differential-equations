@@ -97,19 +97,15 @@ Write a computer program in the C++ programming language that solves
 	<li>
 		<p>Implement Euler's method as described in tutorial</p>
 	</li>
-	
 	<li>
 		<p>Implement improved Euler's method  as described in tutorial</p>
 	</li>
-	
 	<li>
 		<p>Implement Runge-Kutta method analogically</p>
 	</li>
-	
 	<li>
 		<p>Hard code the functions f(x,y,t) and g(x,y,t) as well as the initial conditions t0, x0, y0</p>
 	</li>
-	
 	<li>
 		<p>Provide the functionality of printing the arrays onto the console as in the previous task</p>
 	</li>
