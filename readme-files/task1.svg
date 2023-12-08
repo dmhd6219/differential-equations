@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<style>
-  svg{
-  display: block; 
-  margin: 0 auto;
-  }
-</style>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="54pt" height="31pt" viewBox="0 0 54 31" version="1.1">
   <style>
         path { fill: #2E2E2E; }
@@ -12,6 +6,11 @@
         @media (prefers-color-scheme: dark) {
             path { fill: #ffffff; }
         }
+
+    svg{
+  display: block; 
+  margin: 0 auto;
+  }
     </style>
   
 <defs>
