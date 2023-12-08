@@ -8,7 +8,7 @@
 Write a computer program in the C++ programming language that solves
 
 <p align="center">
-  <img src="./readme-files/task1.svg" alt="Equation 1">
+  <img src="./readme-files/task1.svg" alt="Equation 1" width="100px">
 </p>
 
 ### Computational practicum on systems of 2 ODE
