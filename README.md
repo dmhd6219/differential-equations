@@ -5,12 +5,10 @@
 ## This was done as homework for Differential Equations course at Innopolis University.
 
 ### Computational Practicum on 1st order ODE
-Write a computer program in the C++ programming language that solves 
-
-![Equation 1](./readme-files/task1.svg)
+Write a computer program in the C++ programming language that solves
 
 <p align="center">
-  <img src="./readme-files/task1.svg" alt="Equation 1">
+  <img src="./readme-files/task1.svg" alt="Equation 1" style="transform: scale(2);">
 </p>
 
 ### Computational practicum on systems of 2 ODE
