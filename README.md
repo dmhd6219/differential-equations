@@ -93,7 +93,7 @@ Write a computer program in the C++ programming language that solves
   <img src="./readme-files/task2_2.svg" alt="Equation 2 Interval" width="400px">
 </p>
 
-<ul>
+<ol>
 	<li>
 		<p>Implement Euler's method as described in tutorial</p>
 	</li>
@@ -110,6 +110,6 @@ Write a computer program in the C++ programming language that solves
 		<p>Provide the functionality of printing the arrays onto the console as in the previous task</p>
 	</li>
 
-</ul>
+</ol>
 
 
