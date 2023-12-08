@@ -11,4 +11,12 @@ Write a computer program in the C++ programming language that solves
   <img src="./readme-files/task1.svg" alt="Equation 1" width="200px">
 </p>
 
+on a given interval
+
+<p align="center">
+  <img src="./readme-files/task1_interval.svg" alt="Interval for equation 1" width="200px">
+</p>
+
+and provides the analysis of approximations.
+
 ### Computational practicum on systems of 2 ODE
