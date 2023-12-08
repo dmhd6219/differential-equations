@@ -14,43 +14,43 @@ Write a computer program in the C++ programming language that solves
   on a given interval
 
 <p align="center">
-  <img src="./readme-files/task1_interval.svg" alt="Interval for equation 1" width="200px">
+  <img src="./readme-files/task1_interval.svg" alt="Interval for equation 1" width="100px">
 </p>
 
 and provides the analysis of approximations.
 
 1. Implement in the code the numerical Euler's method
 <p align="center">
-  <img src="./readme-files/task1_point_1.svg" alt="Task 1 Point 1" width="200px">
+  <img src="./readme-files/task1_point_1.svg" alt="Task 1 Point 1" width="400px">
 </p>
 
 2. Implement in the code the numerical Improved Euler's method
 <p align="center">
-  <img src="./readme-files/task1_point_2.svg" alt="Task 1 Point 2" width="200px">
+  <img src="./readme-files/task1_point_2.svg" alt="Task 1 Point 2" width="400px">
 </p>
 
 3. Implement in the code the numerical Runge-Kutta method
 <p align="center">
-  <img src="./readme-files/task1_point_3.svg" alt="Task 1 Point 3" width="200px">
+  <img src="./readme-files/task1_point_3.svg" alt="Task 1 Point 3" width="400px">
 </p>
 
 4. Hardcode the function of the right-hand side of the equation
 <p align="center">
-  <img src="./readme-files/task1_point_4_1.svg" alt="Task 1 Point 4_1" width="200px">
+  <img src="./readme-files/task1_point_4_1.svg" alt="Task 1 Point 4_1" width="100px">
 </p>
   as well as initial conditions
 <p align="center">
-  <img src="./readme-files/task1_point_4_2.svg" alt="Task 1 Point 4_2" width="200px">
+  <img src="./readme-files/task1_point_4_2.svg" alt="Task 1 Point 4_2" width="100px">
 </p>
 
 5. Solve the equation manually, hardcore the function of the analytical solution
 <p align="center">
-  <img src="./readme-files/task1_point_5.svg" alt="Task 1 Point 5" width="200px">
+  <img src="./readme-files/task1_point_5.svg" alt="Task 1 Point 5" width="300px">
 </p>
 
 6. For each numerical method compose the array of the local errors
 <p align="center">
-  <img src="./readme-files/task1_point_6.svg" alt="Task 1 Point 6" width="200px">
+  <img src="./readme-files/task1_point_6.svg" alt="Task 1 Point 6" width="400px">
 </p>
   given the number n of grid points.
 
@@ -59,7 +59,7 @@ and provides the analysis of approximations.
   <img src="./readme-files/task1_point_7_1.svg" alt="Task 1 Point 4_1" width="200px">
 </p>
 <p align="center">
-  <img src="./readme-files/task1_point_7_2.svg" alt="Task 1 Point 4_2" width="200px">
+  <img src="./readme-files/task1_point_7_2.svg" alt="Task 1 Point 4_2" width="400px">
 </p>
 
 8. Provide the functionality of printing the arrays onto the console in the format
