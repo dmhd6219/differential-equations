@@ -11,10 +11,10 @@ Write a computer program in the C++ programming language that solves
   <img src="./readme-files/task1.svg" alt="Equation 1" width="200px">
 </p>
 
-on a given interval
+  on a given interval
 
 <p align="center">
-  <img src="./readme-files/task1_interval.svg" alt="Interval for equation 1">
+  <img src="./readme-files/task1_interval.svg" alt="Interval for equation 1" width="200px">
 </p>
 
 and provides the analysis of approximations.
@@ -38,7 +38,7 @@ and provides the analysis of approximations.
 <p align="center">
   <img src="./readme-files/task1_point_4_1.svg" alt="Task 1 Point 4_1" width="200px">
 </p>
-as well as initial conditions
+  as well as initial conditions
 <p align="center">
   <img src="./readme-files/task1_point_4_2.svg" alt="Task 1 Point 4_2" width="200px">
 </p>
@@ -52,7 +52,7 @@ as well as initial conditions
 <p align="center">
   <img src="./readme-files/task1_point_6.svg" alt="Task 1 Point 6" width="200px">
 </p>
-given the number n of grid points.
+  given the number n of grid points.
 
 7. For each numerical method compose the array of the global errors for each number n of grid points within the range
 <p align="center">
@@ -63,7 +63,7 @@ given the number n of grid points.
 </p>
 
 8. Provide the functionality of printing the arrays onto the console in the format
-* in the first line print the title of the array (e.g. "ti="),
-* in the second line print the values stored in the array formatted "f5" (%.f5), separated by spaces, without the space after the last item, with the "\n" at the end of line. Note that decimal separator is dot(.).
+  * in the first line print the title of the array (e.g. "ti="),
+  * in the second line print the values stored in the array formatted "f5" (%.f5), separated by spaces, without the space after the last item, with the "\n" at the end of line. Note that decimal separator is dot(.).
 
 ### Computational practicum on systems of 2 ODE
