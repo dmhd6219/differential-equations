@@ -6,11 +6,6 @@
         @media (prefers-color-scheme: dark) {
             path { fill: #ffffff; }
         }
-
-    svg{
-  display: block; 
-  margin: 0 auto;
-  }
     </style>
   
 <defs>
