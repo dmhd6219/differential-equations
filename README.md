@@ -25,21 +25,18 @@ and provides the analysis of approximations.
 	  		<img src="./readme-files/task1_point_1.svg" alt="Task 1 Point 1" width="400px">
 		</p>
 	</li>
-	
 	<li>
 		<p>Implement in the code the numerical Improved Euler's method</p>
 		<p align="center">
 			<img src="./readme-files/task1_point_2.svg" alt="Task 1 Point 2" width="400px">
 		</p>
 	</li>
-	
 	<li>
 		<p>Implement in the code the numerical Runge-Kutta method</p>
 		<p align="center">
 			<img src="./readme-files/task1_point_3.svg" alt="Task 1 Point 3" width="400px">
 		</p>
 	</li>
-	
 	<li>
 		<p>Hardcode the function of the right-hand side of the equation</p>
 		<p align="center">
@@ -50,14 +47,12 @@ and provides the analysis of approximations.
 			<img src="./readme-files/task1_point_4_2.svg" alt="Task 1 Point 4_2" width="100px">
 		</p>
 	</li>
-
 	<li>
 		<p>Solve the equation manually, hardcore the function of the analytical solution</p>
 		<p align="center">
 			<img src="./readme-files/task1_point_5.svg" alt="Task 1 Point 5" width="300px">
 		</p>
 	</li>
-
 	<li>
 		<p>For each numerical method compose the array of the local errors</p>
 		<p align="center">
@@ -65,7 +60,6 @@ and provides the analysis of approximations.
 		</p>
 		<p>given the number n of grid points</p>
 	</li>
-	
 	<li>
 		<p>For each numerical method compose the array of the global errors for each number n of grid points within the range</p>
 		<p align="center">
@@ -75,7 +69,6 @@ and provides the analysis of approximations.
 			<img src="./readme-files/task1_point_7_2.svg" alt="Task 1 Point 4_2" width="400px">
 		</p>
 	</li>
-	
 	<li>
 		<p>Provide the functionality of printing the arrays onto the console in the format</p>
 		<ul>
