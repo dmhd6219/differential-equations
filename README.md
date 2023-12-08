@@ -9,4 +9,8 @@ Write a computer program in the C++ programming language that solves
 
 ![Equation 1](./readme-files/task1.svg)
 
+<p align="center">
+  <img src="./readme-files/task1.svg" alt="Equation 1">
+</p>
+
 ### Computational practicum on systems of 2 ODE
