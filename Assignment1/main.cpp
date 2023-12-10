@@ -9,10 +9,9 @@ double f(double x, double y) {
     return cos(x);
 }
 
-void exact_solution(double h, int n, double *y) {
+void exact_solution(int n, double y[], double xi[]) {
     for (int i = 0; i <= n; i++) {
-        double xi = i * h;
-        y[i] = sin(xi);
+        y[i] = sin(xi[i]);
     }
 }
 
@@ -66,10 +65,22 @@ void solutions(int n, int task, double h, double a, double b) {
     double exactSol[n], eulerSol[n], impEulerSol[n], rungeKuttaSol[n];
     double eulerError[n], impEulerError[n], rungeKuttaError[n];
 
-    exact_solution(h, n, exactSol);
+    exact_solution(n, exactSol, xi);
     euler(h, n, eulerSol, xi);
     improved_euler(h, n, impEulerSol, xi);
     runge_kutta(h, n, rungeKuttaSol, xi);
+
+    for (int i = 0; i < n; i++){
+        eulerError[i] = abs(eulerSol[i] - exactSol[i]);
+    }
+
+    for (int i = 0; i < n; i++){
+        impEulerError[i] = fabs(impEulerSol[i] - exactSol[i]);
+    }
+
+    for (int i = 0; i < n; i++){
+        rungeKuttaError[i] = fabs(rungeKuttaSol[i] - exactSol[i]);
+    }
 
     switch(task){
         case 1:
@@ -85,21 +96,12 @@ void solutions(int n, int task, double h, double a, double b) {
             printArray("RK4_yi=", rungeKuttaSol, n);
             break;
         case 5:
-            for (int i = 0; i < n; i++){
-                eulerError[i] = abs(eulerSol[i] - exactSol[i]);
-            }
             printArray("Euler_LE(xi)=", eulerError, n);
             break;
         case 6:
-            for (int i = 0; i < n; i++){
-                impEulerError[i] = fabs(impEulerSol[i] - exactSol[i]);
-            }
             printArray("iEuler_LE(xi)=", impEulerError, n);
             break;
         case 7:
-            for (int i = 0; i < n; i++){
-                rungeKuttaError[i] = fabs(rungeKuttaSol[i] - exactSol[i]);
-            }
             printArray("RK4_LE(xi)=", rungeKuttaError, n);
         default:
             cout << "No such task as " << task << "!!!" << endl;
@@ -115,9 +117,9 @@ int main() {
     n = 10;
     n1 = 10;
     n2 = 20;
-    task = 1;
+    task = 2;
 
-    // scanf("%d %lf %lf %d", &n, &n1, &n2, &task);
+    scanf("%d %lf %lf %d", &n, &n1, &n2, &task);
 
 
 
