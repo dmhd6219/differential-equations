@@ -16,13 +16,6 @@ void exact_solution(double h, int n, double *y) {
     }
 }
 
-void analytical_solution(double h, int n, double *y) {
-    for (int i = 0; i <= n; i++) {
-        double xi = i * h;
-        y[i] = sin(xi) + 1;
-    }
-}
-
 void euler(double y0, double h, int n, double *y, double *xi) {
     y[0] = y0;
     for (int i = 1; i <= n; i++) {
@@ -41,16 +34,14 @@ void improved_euler(double y0, double h, int n, double *y, double *xi) {
     }
 }
 
-void runge_kutta(double t0, double y0, double h, int n, double *y) {
+void runge_kutta(double y0, double h, int n, double *y, double *xi) {
     y[0] = y0;
 
     for (int i = 1; i <= n; i++) {
-        double t = t0 + (i - 1) * h;
-
-        double k1 = f(t, y[i - 1]);
-        double k2 = f(t + 0.5 * h, y[i - 1] + 0.5 * h * k1);
-        double k3 = f(t + 0.5 * h, y[i - 1] + 0.5 * h * k2);
-        double k4 = f(t + h, y[i - 1] + h * k3);
+        double k1 = f(xi[i - 1], 1);
+        double k2 = f(xi[i - 1] + 0.5 * h, 1);
+        double k3 = f(xi[i - 1] + 0.5 * h, 1);
+        double k4 = f(xi[i - 1] + h, 1);
 
         y[i] = y[i - 1] + (h / 6) * (k1 + 2 * k2 + 2 * k3 + k4);
     }
@@ -87,35 +78,39 @@ void solutions(int n, int task, double h, double a, double b, double y0) {
             improved_euler(y0, h, n, impEulerSol, xi);
             printArray("iEuler_yi=", impEulerSol, n);
         } else if (task == 4) {
+            runge_kutta(y0, h, n, rungeKuttaSol, xi);
             printArray("RK4_yi=", rungeKuttaSol, n);
-            runge_kutta(a, y0, h, n, rungeKuttaSol);
         }
 
-        double analyticalSol[n];
-        analytical_solution(h, n, analyticalSol);
+        double exactSolution[n];
+        exact_solution(h, n, exactSolution);
 
         if (task == 5) {
+            euler(y0, h, n, eulerSol, xi);
 
-            double eulerError[n + 1];
-            for (int i = 0; i < n; i++)
-                eulerError[i] = fabs(eulerSol[i] - analyticalSol[i]);
+            double eulerError[n];
+            for (int i = 0; i < n; i++){
+                eulerError[i] = abs(eulerSol[i] - exactSolution[i]);
+            }
 
-            printArray("Euler_LE(xi)=", eulerError, n + 1);
+            printArray("Euler_LE(xi)=", eulerError, n);
         } else if (task == 6) {
+            improved_euler(y0, h, n, impEulerSol, xi);
 
-            double impEulerError[n + 1];
+            double impEulerError[n];
             for (int i = 0; i < n; i++)
-                impEulerError[i] = fabs(impEulerSol[i] - analyticalSol[i]);
+                impEulerError[i] = fabs(impEulerSol[i] - exactSolution[i]);
 
-            printArray("iEuler_LE(xi)=", impEulerError, n + 1);
+            printArray("iEuler_LE(xi)=", impEulerError, n);
 
         } else if (task == 7) {
+            runge_kutta(y0, h, n, rungeKuttaSol, xi);
 
-            double rungeKuttaError[n + 1];
+            double rungeKuttaError[n];
             for (int i = 0; i < n; i++)
-                rungeKuttaError[i] = fabs(rungeKuttaSol[i] - analyticalSol[i]);
+                rungeKuttaError[i] = fabs(rungeKuttaSol[i] - exactSolution[i]);
 
-            printArray("RK4_LE(xi)=", rungeKuttaError, n + 1);
+            printArray("RK4_LE(xi)=", rungeKuttaError, n);
 
         }
     }
@@ -123,10 +118,15 @@ void solutions(int n, int task, double h, double a, double b, double y0) {
 
 
 int main() {
-    int n, task;
-    double n1, n2;
+    int n, task, n1, n2;
 
     scanf("%d %lf %lf %d", &n, &n1, &n2, &task);
+
+//    n = 10;
+//    n1 = 10;
+//    n2 = 20;
+//    task = 5;
+
 
     double a = 0;
     double b = M_PI;
