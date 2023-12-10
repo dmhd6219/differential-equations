@@ -5,17 +5,28 @@
 
 using namespace std;
 
+double max(const double arr[], int n){
+    double mx = arr[0];
+    for (int i = 1; i < n; i++){
+        if (arr[i] > mx){
+            mx = arr[i];
+        }
+    }
+    return mx;
+
+}
+
 double f(double x, double y) {
     return cos(x);
 }
 
-void exact_solution(int n, double y[], double xi[]) {
+void exact_solution(int n, double y[], const double xi[]) {
     for (int i = 0; i <= n; i++) {
         y[i] = sin(xi[i]);
     }
 }
 
-void euler(double a, double b, int n, double y[], double xi[]) {
+void euler(double a, double b, int n, double y[], const double xi[]) {
     double h = (b - a) / (n - 1);
 
     y[0] = 0;
@@ -24,7 +35,7 @@ void euler(double a, double b, int n, double y[], double xi[]) {
     }
 }
 
-void improved_euler(double a, double b, int n, double y[], double xi[]) {
+void improved_euler(double a, double b, int n, double y[], const double xi[]) {
     double h = (b - a) / (n - 1);
 
     y[0] = 0;
@@ -36,7 +47,7 @@ void improved_euler(double a, double b, int n, double y[], double xi[]) {
     }
 }
 
-void runge_kutta(double a, double b, int n, double y[], double xi[]) {
+void runge_kutta(double a, double b, int n, double y[], const double xi[]) {
     double h = (b - a) / (n - 1);
 
     y[0] = 0;
@@ -50,7 +61,7 @@ void runge_kutta(double a, double b, int n, double y[], double xi[]) {
     }
 }
 
-void local_error(double solution[], double exactSolution[], int n, double y[]){
+void local_error(const double solution[], const double exactSolution[], int n, double y[]){
     for (int i = 0; i < n; i++){
         y[i] = fabs(solution[i] - exactSolution[i]);
     }
