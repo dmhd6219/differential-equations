@@ -58,61 +58,53 @@ void printArray(const string &name, double *arr, int n) {
 
 void solutions(int n, int task, double h, double a, double b, double y0) {
     double xi[n];
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++) {
         xi[i] = i * h;
-
+    }
     printArray("xi=", xi, n);
 
-    if (task == 1) {
-        double y[n];
-        exact_solution(h, n, y);
+    double exactSol[n], eulerSol[n], impEulerSol[n], rungeKuttaSol[n];
+    double eulerError[n], impEulerError[n], rungeKuttaError[n];
 
-        printArray("y(xi)=", y, n);
-    } else {
-        double eulerSol[n], impEulerSol[n], rungeKuttaSol[n];
+    exact_solution(h, n, exactSol);
+    euler(y0, h, n, eulerSol, xi);
+    improved_euler(y0, h, n, impEulerSol, xi);
+    runge_kutta(y0, h, n, rungeKuttaSol, xi);
 
-        if (task == 2) {
-            euler(y0, h, n, eulerSol, xi);
+    switch(task){
+        case 1:
+            printArray("y(xi)=", exactSol, n);
+            break;
+        case 2:
             printArray("Euler_yi=", eulerSol, n);
-        } else if (task == 3) {
-            improved_euler(y0, h, n, impEulerSol, xi);
+            break;
+        case 3:
             printArray("iEuler_yi=", impEulerSol, n);
-        } else if (task == 4) {
-            runge_kutta(y0, h, n, rungeKuttaSol, xi);
+            break;
+        case 4:
             printArray("RK4_yi=", rungeKuttaSol, n);
-        }
-
-        double exactSolution[n];
-        exact_solution(h, n, exactSolution);
-
-        if (task == 5) {
-            euler(y0, h, n, eulerSol, xi);
-
-            double eulerError[n];
+            break;
+        case 5:
             for (int i = 0; i < n; i++){
-                eulerError[i] = abs(eulerSol[i] - exactSolution[i]);
+                eulerError[i] = abs(eulerSol[i] - exactSol[i]);
             }
-
             printArray("Euler_LE(xi)=", eulerError, n);
-        } else if (task == 6) {
-            improved_euler(y0, h, n, impEulerSol, xi);
-
-            double impEulerError[n];
-            for (int i = 0; i < n; i++)
-                impEulerError[i] = fabs(impEulerSol[i] - exactSolution[i]);
-
+            break;
+        case 6:
+            for (int i = 0; i < n; i++){
+                impEulerError[i] = fabs(impEulerSol[i] - exactSol[i]);
+            }
             printArray("iEuler_LE(xi)=", impEulerError, n);
-
-        } else if (task == 7) {
-            runge_kutta(y0, h, n, rungeKuttaSol, xi);
-
-            double rungeKuttaError[n];
-            for (int i = 0; i < n; i++)
-                rungeKuttaError[i] = fabs(rungeKuttaSol[i] - exactSolution[i]);
-
+            break;
+        case 7:
+            for (int i = 0; i < n; i++){
+                rungeKuttaError[i] = fabs(rungeKuttaSol[i] - exactSol[i]);
+            }
             printArray("RK4_LE(xi)=", rungeKuttaError, n);
+        default:
+            cout << "No such task!!" << endl;
 
-        }
+
     }
 }
 
@@ -120,12 +112,13 @@ void solutions(int n, int task, double h, double a, double b, double y0) {
 int main() {
     int n, task, n1, n2;
 
-    scanf("%d %lf %lf %d", &n, &n1, &n2, &task);
+    n = 10;
+    n1 = 10;
+    n2 = 20;
+    task = 1;
 
-//    n = 10;
-//    n1 = 10;
-//    n2 = 20;
-//    task = 5;
+    // scanf("%d %lf %lf %d", &n, &n1, &n2, &task);
+
 
 
     double a = 0;
