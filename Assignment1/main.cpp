@@ -38,9 +38,9 @@ void runge_kutta(double h, int n, double y[], double xi[]) {
 
     for (int i = 1; i < n; i++) {
         double k1 = f(xi[i - 1], 1);
-        double k2 = f(xi[i - 1] + 0.5 * h, 1);
-        double k3 = f(xi[i - 1] + 0.5 * h, 1);
-        double k4 = f(xi[i - 1] + h, 1);
+        double k2 = f(xi[i - 1] + 0.5 * h  * k1, 1);
+        double k3 = f(xi[i - 1] + 0.5 * h  * k2, 1);
+        double k4 = f(xi[i - 1] + h * k3, 1);
 
         y[i] = y[i - 1] + (h / 6) * (k1 + 2 * k2 + 2 * k3 + k4);
     }
