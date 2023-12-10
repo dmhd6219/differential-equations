@@ -85,7 +85,7 @@ void solutions(int n, int task, double h, double a, double b, int n1, int n2) {
 
     double exactSol[n], eulerSol[n], impEulerSol[n], rungeKuttaSol[n];
     double eulerError[n], impEulerError[n], rungeKuttaError[n];
-    double eulerGlobalError[n], impEulerGlobalError[n], rungeKuttaGlobalError[n];
+    double eulerGlobalError[n2 - n1], impEulerGlobalError[n2 - n1], rungeKuttaGlobalError[n2 - n1];
 
     exact_solution(n, exactSol, xi);
     euler(a, b, n, eulerSol, xi);
@@ -96,16 +96,34 @@ void solutions(int n, int task, double h, double a, double b, int n1, int n2) {
     local_error(impEulerSol, exactSol, n, impEulerError);
     local_error(rungeKuttaSol, exactSol, n, rungeKuttaError);
 
-    for (int i = 0; i < n; i++){
-        eulerError[i] = fabs(eulerSol[i] - exactSol[i]);
-        impEulerError[i] = fabs(impEulerSol[i] - exactSol[i]);
-        rungeKuttaError[i] = fabs(rungeKuttaSol[i] - exactSol[i]);
-    }
 
 
-    for (int i = n1; i <= n2; i++){
-        double sol[i - 1];
-        double esol[i - 1];
+    for (int i = n1; i < n2; i++){
+        double yEuler[i - 1];
+        double yImpEuler[i - 1];
+        double yRungeKutta[i - 1];
+
+        double localEuler[i - 1];
+        double localImpEuler[i - 1];
+        double localRungeKutta[i - 1];
+
+        double exact[i - 1];
+
+        euler(a, b, i - 1, yEuler, xi);
+        improved_euler(a, b, i - 1, yImpEuler, xi);
+        runge_kutta(a, b, i - 1, yRungeKutta, xi);
+
+        exact_solution(i - 1, exact, xi);
+
+        local_error(yEuler, exact, i - 1, localEuler);
+        local_error(yImpEuler, exact, i - 1, localImpEuler);
+        local_error(yRungeKutta, exact, i - 1, localRungeKutta);
+
+        eulerGlobalError[i - n1] = max(localEuler, i - 1);
+        impEulerGlobalError[i - n1] = max(localImpEuler, i - 1);
+        rungeKuttaGlobalError[i - n1] = max(localRungeKutta, i - 1);
+
+
     }
 
 
@@ -131,6 +149,16 @@ void solutions(int n, int task, double h, double a, double b, int n1, int n2) {
             break;
         case 7:
             printArray("RK4_LE(xi)=", rungeKuttaError, n);
+            break;
+        case 8:
+            printArray("Euler_GE(n)=", eulerGlobalError, n2 - n1);
+            break;
+        case 9:
+            printArray("iEuler_GE(n)=", impEulerGlobalError, n2 - n1);
+            break;
+        case 10:
+            printArray("RK4_GE(n)=", rungeKuttaGlobalError, n2 - n1);
+            break;
         default:
             cout << "No such task as " << task << "!!!" << endl;
 
@@ -145,7 +173,7 @@ int main() {
     n = 10;
     n1 = 10;
     n2 = 20;
-    task = 1;
+    task = 7;
 
     scanf("%d %lf %lf %d", &n, &n1, &n2, &task);
 
