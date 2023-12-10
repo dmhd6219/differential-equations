@@ -16,17 +16,17 @@ void exact_solution(double h, int n, double *y) {
     }
 }
 
-void euler(double y0, double h, int n, double *y, double *xi) {
-    y[0] = y0;
-    for (int i = 1; i <= n; i++) {
+void euler(double h, int n, double y[], double xi[]) {
+    y[0] = 0;
+    for (int i = 1; i < n; i++) {
         y[i] = y[i - 1] + h * f(xi[i - 1], y[i - 1]);
     }
 }
 
-void improved_euler(double y0, double h, int n, double *y, double *xi) {
-    y[0] = y0;
+void improved_euler(double h, int n, double y[], double xi[]) {
+    y[0] = 0;
 
-    for (int i = 1; i <= n; i++) {
+    for (int i = 1; i < n; i++) {
         double k1 = f(xi[i - 1], y[i - 1]);
         double k2 = f(xi[i - 1] + h, y[i - 1] + h * k1);
 
@@ -34,10 +34,10 @@ void improved_euler(double y0, double h, int n, double *y, double *xi) {
     }
 }
 
-void runge_kutta(double y0, double h, int n, double *y, double *xi) {
-    y[0] = y0;
+void runge_kutta(double h, int n, double y[], double xi[]) {
+    y[0] = 0;
 
-    for (int i = 1; i <= n; i++) {
+    for (int i = 1; i < n; i++) {
         double k1 = f(xi[i - 1], 1);
         double k2 = f(xi[i - 1] + 0.5 * h, 1);
         double k3 = f(xi[i - 1] + 0.5 * h, 1);
@@ -48,7 +48,7 @@ void runge_kutta(double y0, double h, int n, double *y, double *xi) {
 }
 
 
-void printArray(const string &name, double *arr, int n) {
+void printArray(const string &name, double arr[], int n) {
     cout << name << endl;
     for (int i = 0; i < n; i++)
         cout << fixed << setprecision(5) << arr[i] << " ";
@@ -56,7 +56,7 @@ void printArray(const string &name, double *arr, int n) {
     cout << endl;
 }
 
-void solutions(int n, int task, double h, double a, double b, double y0) {
+void solutions(int n, int task, double h, double a, double b) {
     double xi[n];
     for (int i = 0; i < n; i++) {
         xi[i] = i * h;
@@ -67,9 +67,9 @@ void solutions(int n, int task, double h, double a, double b, double y0) {
     double eulerError[n], impEulerError[n], rungeKuttaError[n];
 
     exact_solution(h, n, exactSol);
-    euler(y0, h, n, eulerSol, xi);
-    improved_euler(y0, h, n, impEulerSol, xi);
-    runge_kutta(y0, h, n, rungeKuttaSol, xi);
+    euler(h, n, eulerSol, xi);
+    improved_euler(h, n, impEulerSol, xi);
+    runge_kutta(h, n, rungeKuttaSol, xi);
 
     switch(task){
         case 1:
@@ -102,7 +102,7 @@ void solutions(int n, int task, double h, double a, double b, double y0) {
             }
             printArray("RK4_LE(xi)=", rungeKuttaError, n);
         default:
-            cout << "No such task!!" << endl;
+            cout << "No such task as " << task << "!!!" << endl;
 
 
     }
@@ -124,11 +124,9 @@ int main() {
     double a = 0;
     double b = M_PI;
 
-    double y0 = 0;
-
     double h = (b - a) / (n - 1);
 
-    solutions(n, task, h, a, b, y0);
+    solutions(n, task, h, a, b);
 
 
 }
