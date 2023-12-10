@@ -50,6 +50,12 @@ void runge_kutta(double a, double b, int n, double y[], double xi[]) {
     }
 }
 
+void local_error(double solution[], double exactSolution[], int n, double y[]){
+    for (int i = 0; i < n; i++){
+        y[i] = fabs(solution[i] - exactSolution[i]);
+    }
+}
+
 
 void printArray(const string &name, double arr[], int n) {
     cout << name << endl;
@@ -75,20 +81,20 @@ void solutions(int n, int task, double h, double a, double b, int n1, int n2) {
     improved_euler(a, b, n, impEulerSol, xi);
     runge_kutta(a, b, n, rungeKuttaSol, xi);
 
-    for (int i = 0; i < n; i++){
-        eulerError[i] = abs(eulerSol[i] - exactSol[i]);
-    }
+    local_error(eulerSol, exactSol, n, eulerError);
+    local_error(impEulerSol, exactSol, n, impEulerError);
+    local_error(rungeKuttaSol, exactSol, n, rungeKuttaError);
 
     for (int i = 0; i < n; i++){
+        eulerError[i] = fabs(eulerSol[i] - exactSol[i]);
         impEulerError[i] = fabs(impEulerSol[i] - exactSol[i]);
-    }
-
-    for (int i = 0; i < n; i++){
         rungeKuttaError[i] = fabs(rungeKuttaSol[i] - exactSol[i]);
     }
 
-    for (int i = n1; i <= n2; i++){
 
+    for (int i = n1; i <= n2; i++){
+        double sol[i - 1];
+        double esol[i - 1];
     }
 
 
