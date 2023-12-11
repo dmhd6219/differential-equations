@@ -1,190 +1,193 @@
 #include <iostream>
-#include <iomanip>
 #include <cmath>
-
+#include <vector>
+#include <iomanip>
 
 using namespace std;
 
-double max(const double arr[], int n){
-    double mx = arr[0];
-    for (int i = 1; i < n; i++){
-        if (arr[i] > mx){
-            mx = arr[i];
-        }
+double max(vector<double> vec) {
+    double mx = vec[0];
+    for (double val: vec) {
+        mx = max(mx, val);
     }
     return mx;
-
 }
 
-double f(double x, double y) {
+double f(double x) {
     return cos(x);
 }
 
-void exact_solution(int n, double y[], const double xi[]) {
-    for (int i = 0; i <= n; i++) {
-        y[i] = sin(xi[i]);
-    }
+double fs(double x) {
+    return sin(x);
 }
 
-void euler(double a, double b, int n, double y[], const double xi[]) {
-    double h = (b - a) / (n - 1);
-
-    y[0] = 0;
-    for (int i = 1; i < n; i++) {
-        y[i] = y[i - 1] + h * f(xi[i - 1], y[i - 1]);
-    }
-}
-
-void improved_euler(double a, double b, int n, double y[], const double xi[]) {
-    double h = (b - a) / (n - 1);
-
-    y[0] = 0;
-    for (int i = 1; i < n; i++) {
-        double k1 = f(xi[i - 1], y[i - 1]);
-        double k2 = f(xi[i - 1] + h, y[i - 1] + h * k1);
-
-        y[i] = y[i - 1] + (h / 2) * (k1 + k2);
-    }
-}
-
-void runge_kutta(double a, double b, int n, double y[], const double xi[]) {
-    double h = (b - a) / (n - 1);
-
-    y[0] = 0;
-    for (int i = 1; i < n; i++) {
-        double k1 = f(xi[i - 1], 1);
-        double k2 = f(xi[i - 1] + 0.5 * h, 1);
-        double k3 = f(xi[i - 1] + 0.5 * h, 1);
-        double k4 = f(xi[i - 1] + h, 1);
-
-        y[i] = y[i - 1] + (h / 6) * (k1 + 2 * k2 + 2 * k3 + k4);
-    }
-}
-
-void local_error(const double solution[], const double exactSolution[], int n, double y[]){
-    for (int i = 0; i < n; i++){
-        y[i] = fabs(solution[i] - exactSolution[i]);
-    }
-}
-
-
-void printArray(const string &name, double arr[], int n) {
+void print_vector(const string &name, vector<double> &vec) {
     cout << name << endl;
-    for (int i = 0; i < n; i++)
-        cout << fixed << setprecision(5) << arr[i] << " ";
-
+    for (double i: vec) {
+        cout << fixed << setprecision(5) << i << " ";
+    }
     cout << endl;
 }
 
-void solutions(int n, int task, double h, double a, double b, int n1, int n2) {
-    double xi[n];
-    for (int i = 0; i < n; i++) {
-        xi[i] = i * h;
+void print_vector(const string &name, const vector<int> &vec) {
+    cout << name << endl;
+    for (double i: vec) {
+        cout << i << " ";
     }
-    printArray("xi=", xi, n);
+    cout << endl;
+}
 
-    double exactSol[n], eulerSol[n], impEulerSol[n], rungeKuttaSol[n];
-    double eulerError[n], impEulerError[n], rungeKuttaError[n];
-    double eulerGlobalError[n2 - n1], impEulerGlobalError[n2 - n1], rungeKuttaGlobalError[n2 - n1];
+void exact_solution(double y0, double a, double b, int n, vector<double> &xi, vector<double> &yi) {
+    xi.push_back(a);
+    yi.push_back(y0);
 
-    exact_solution(n, exactSol, xi);
-    euler(a, b, n, eulerSol, xi);
-    improved_euler(a, b, n, impEulerSol, xi);
-    runge_kutta(a, b, n, rungeKuttaSol, xi);
-
-    local_error(eulerSol, exactSol, n, eulerError);
-    local_error(impEulerSol, exactSol, n, impEulerError);
-    local_error(rungeKuttaSol, exactSol, n, rungeKuttaError);
-
-
-
-    for (int i = n1; i < n2; i++){
-        double yEuler[i - 1];
-        double yImpEuler[i - 1];
-        double yRungeKutta[i - 1];
-
-        double localEuler[i - 1];
-        double localImpEuler[i - 1];
-        double localRungeKutta[i - 1];
-
-        double exact[i - 1];
-
-        euler(a, b, i - 1, yEuler, xi);
-        improved_euler(a, b, i - 1, yImpEuler, xi);
-        runge_kutta(a, b, i - 1, yRungeKutta, xi);
-
-        exact_solution(i - 1, exact, xi);
-
-        local_error(yEuler, exact, i - 1, localEuler);
-        local_error(yImpEuler, exact, i - 1, localImpEuler);
-        local_error(yRungeKutta, exact, i - 1, localRungeKutta);
-
-        eulerGlobalError[i - n1] = max(localEuler, i - 1);
-        impEulerGlobalError[i - n1] = max(localImpEuler, i - 1);
-        rungeKuttaGlobalError[i - n1] = max(localRungeKutta, i - 1);
-
-
+    double h = (b - a) / (n - 1);
+    for (int i = 0; i < n - 1; i++) {
+        xi.push_back(xi[i] + h);
+        yi.push_back(fs(xi[i + 1]));
     }
+}
 
+void euler_method(double y0, double a, double b, int n, vector<double> &xi, vector<double> &yi) {
+    xi.push_back(a);
+    yi.push_back(y0);
 
+    double h = (b - a) / (n - 1);
+    for (int i = 0; i < n - 1; i++) {
+        xi.push_back(xi[i] + h);
+        yi.push_back(yi[i] + h * f(xi[i]));
+    }
+}
 
-    switch(task){
-        case 1:
-            printArray("y(xi)=", exactSol, n);
-            break;
-        case 2:
-            printArray("Euler_yi=", eulerSol, n);
-            break;
-        case 3:
-            printArray("iEuler_yi=", impEulerSol, n);
-            break;
-        case 4:
-            printArray("RK4_yi=", rungeKuttaSol, n);
-            break;
-        case 5:
-            printArray("Euler_LE(xi)=", eulerError, n);
-            break;
-        case 6:
-            printArray("iEuler_LE(xi)=", impEulerError, n);
-            break;
-        case 7:
-            printArray("RK4_LE(xi)=", rungeKuttaError, n);
-            break;
-        case 8:
-            printArray("Euler_GE(n)=", eulerGlobalError, n2 - n1);
-            break;
-        case 9:
-            printArray("iEuler_GE(n)=", impEulerGlobalError, n2 - n1);
-            break;
-        case 10:
-            printArray("RK4_GE(n)=", rungeKuttaGlobalError, n2 - n1);
-            break;
-        default:
-            cout << "No such task as " << task << "!!!" << endl;
+void improved_euler_method(double y0, double a, double b, int n, vector<double> &xi, vector<double> &yi) {
+    xi.push_back(a);
+    yi.push_back(y0);
 
+    double h = (b - a) / (n - 1);
+    for (int i = 0; i < n - 1; i++) {
+        xi.push_back(xi[i] + h);
 
+        double k1i = f(xi[i]);
+        double k2i = f(xi[i] + h);
+        yi.push_back(yi[i] + (h / 2) * (k1i + k2i));
+    }
+}
+
+void runge_kutta_method(double y0, double a, double b, int n, vector<double> &xi, vector<double> &yi) {
+    xi.push_back(a);
+    yi.push_back(y0);
+
+    double h = (b - a) / (n - 1);
+    for (int i = 0; i < n - 1; i++) {
+        xi.push_back(xi[i] + h);
+
+        double k1 = f(xi[i]);
+        double k2 = f(xi[i] + h / 2);
+        double k3 = f(xi[i] + h / 2);
+        double k4 = f(xi[i] + h);
+        yi.push_back(yi[i] + (h / 6) * (k1 + 2 * k2 + 2 * k3 + k4));
+    }
+}
+
+void local_errors(vector<double> xi, vector<double> yi, vector<double> &ei) {
+    for (int i = 0; i < xi.size(); i++) {
+        ei.push_back(abs(fs(xi[i]) - yi[i]));
+    }
+}
+
+void global_errors(void (*function)(double, double, double, int, vector<double> &, vector<double> &),
+                   vector<double> &ge, const vector<int>& ni, double y0, double a, double b) {
+
+    for (int i: ni) {
+        vector<double> xi, yi;
+        function(y0, a, b, i, xi, yi);
+        vector<double> ei;
+        local_errors(xi, yi, ei);
+        ge.push_back(max(ei));
     }
 }
 
 
 int main() {
-    int n, task, n1, n2;
+    double y0 = 0, a = 0, b = M_PI;
+    int n = 10, n1 = 10, n2 = 20, task = 7;
+    // scanf("%d %lf %lf %d", &n, &n1, &n2, &task);
 
-    n = 10;
-    n1 = 10;
-    n2 = 20;
-    task = 7;
+    vector<double> xi, yi, ei, ge;
+    vector<int> ni;
+    for (int i = n1; i <= n2; i++) {
+        ni.push_back(i);
+    }
 
-    scanf("%d %lf %lf %d", &n, &n1, &n2, &task);
+    switch (task) {
+        case 1:
+            exact_solution(y0, a, b, n, xi, yi);
+
+            print_vector("xi=", xi);
+            print_vector("y(xi)=", yi);
+            break;
+        case 2:
+            euler_method(y0, a, b, n, xi, yi);
+
+            print_vector("xi=", xi);
+            print_vector("Euler_yi=", yi);
+            break;
+        case 3:
+            improved_euler_method(y0, a, b, n, xi, yi);
+
+            print_vector("xi=", xi);
+            print_vector("iEuler_yi=", yi);
+            break;
+        case 4:
+            runge_kutta_method(y0, a, b, n, xi, yi);
+
+            print_vector("xi=", xi);
+            print_vector("RK4_yi=", yi);
+            break;
+        case 5:
+            euler_method(y0, a, b, n, xi, yi);
+            local_errors(xi, yi, ei);
+
+            print_vector("xi=", xi);
+            print_vector("Euler_LE(xi)=", ei);
+            break;
+        case 6:
+            improved_euler_method(y0, a, b, n, xi, yi);
+            local_errors(xi, yi, ei);
+
+            print_vector("xi=", xi);
+            print_vector("iEuler_LE(xi)=", ei);
+            break;
+        case 7:
+            runge_kutta_method(y0, a, b, n, xi, yi);
+            local_errors(xi, yi, ei);
+
+            print_vector("xi=", xi);
+            print_vector("RK4_LE(xi)=", ei);
+            break;
+        case 8:
+            global_errors(euler_method, ge, ni, y0, a, b);
+
+            print_vector("ni=", ni);
+            print_vector("Euler_GE(n)=", ge);
+            break;
+        case 9:
+            global_errors(improved_euler_method, ge, ni, y0, a, b);
 
 
+            print_vector("ni=", ni);
+            print_vector("iEuler_GE(n)=", ge);
+            break;
+        case 10:
+            global_errors(runge_kutta_method, ge, ni, y0, a, b);
 
-    double a = 0;
-    double b = M_PI;
+            print_vector("ni=", ni);
+            print_vector("RK4_GE(n)=", ge);
+            break;
+        default:
+            cout << "No such task as " << task << "!!!" << endl;
+    }
 
-    double h = (b - a) / (n - 1);
 
-    solutions(n, task, h, a, b, n1, n2);
-
-
+    return 0;
 }
