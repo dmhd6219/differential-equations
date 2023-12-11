@@ -150,6 +150,7 @@ void plot_solutions(vector<double> x_exact, vector<double> y_exact,
 }
 
 
+
 int main() {
     double y0 = 0;
     double a = 0;
@@ -244,7 +245,15 @@ int main() {
     improved_euler(y0, a, b, n, ixi, iyi);
     runge_kutta(y0, a, b, n, rkxi, rkyi);
 
-    plot_solutions(exi, eyi, euxi, euyi,
-                   ixi, iyi, rkxi, rkyi);
+    // plot_solutions(exi, eyi, euxi, euyi, ixi, iyi, rkxi, rkyi);
+
+    vector<double> lee, leeu, lei, lerk;
+    local_errors(exi, eyi, lee);
+    local_errors(euxi, euyi, leeu);
+    local_errors(ixi, iyi, lei);
+    local_errors(rkxi, rkyi, lerk);
+
+    // plot_solutions(exi, lee, euxi, leeu, ixi, lei, rkxi, lerk);
+
     return 0;
 }
