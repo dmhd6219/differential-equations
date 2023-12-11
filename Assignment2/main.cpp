@@ -36,6 +36,7 @@ void euler(double a, double b, double x0, double y0, int n,
 
     xi.push_back(x0);
     yi.push_back(y0);
+    ti.push_back(a);
 
     for (int i = 0; i < n - 1; ++i) {
         ti.push_back(ti[i] + h);
@@ -46,9 +47,11 @@ void euler(double a, double b, double x0, double y0, int n,
 
 void improved_euler(double a, double b, double x0, double y0, int n,
                            vector<double> &xi, vector<double> &yi, vector<double> &ti) {
+    double h = (b - a) / (n - 1);
+
     xi.push_back(x0);
     yi.push_back(y0);
-    double h = (b - a) / (n - 1);
+    ti.push_back(a);
 
     for (int i = 0; i < n - 1; ++i) {
         ti.push_back(ti[i] + h);
@@ -64,10 +67,13 @@ void improved_euler(double a, double b, double x0, double y0, int n,
     }
 }
 
-void runge_kutta(double a, double b, double x0, double y0, int n, vector<double> &xi, vector<double> &yi, vector<double>& ti) {
+void runge_kutta(double a, double b, double x0, double y0, int n,
+                 vector<double> &xi, vector<double> &yi, vector<double>& ti) {
+    double h = (b-a)/(n-1);
+
     xi.push_back(x0);
     yi.push_back(y0);
-    double h = (b-a)/(n-1);
+    ti.push_back(a);
 
     for (int i = 0; i < n - 1; ++i) {
         ti.push_back(ti[i] + h);
