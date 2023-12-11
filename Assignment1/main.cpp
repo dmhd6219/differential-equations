@@ -14,11 +14,11 @@ double max(vector<double> vec) {
 }
 
 double f(double x) {
-    return cos(x);
+    return cos(6 * x);
 }
 
 double fs(double x) {
-    return sin(x);
+    return sin(6 * x) / 6;
 }
 
 void print_vector(const string &name, vector<double> &vec) {
@@ -96,7 +96,7 @@ void local_errors(vector<double> xi, vector<double> yi, vector<double> &ei) {
 }
 
 void global_errors(void (*function)(double, double, double, int, vector<double> &, vector<double> &),
-                   vector<double> &ge, const vector<int>& ni, double y0, double a, double b) {
+                   vector<double> &ge, const vector<int> &ni, double y0, double a, double b) {
 
     for (int i: ni) {
         vector<double> xi, yi;
@@ -107,11 +107,21 @@ void global_errors(void (*function)(double, double, double, int, vector<double> 
     }
 }
 
+void plot_graph(std::vector<double> x, std::vector<double> y) {
+    FILE *gnuplot = popen("gnuplot -persist", "w");
+    fprintf(gnuplot, "plot '-' with lines\n");
+    for (int i = 0; i < x.size(); i++) {
+        fprintf(gnuplot, "%f %f\n", x[i], y[i]);
+    }
+    fprintf(gnuplot, "e\n");
+    pclose(gnuplot);
+}
+
 
 int main() {
     double y0 = 0;
     double a = 0;
-    double b = M_PI;
+    double b = 1;
 
     int n, n1, n2, task;
     cin >> n >> n1 >> n2 >> task;
