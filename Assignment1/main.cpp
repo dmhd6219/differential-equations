@@ -48,7 +48,7 @@ void exact_solution(double y0, double a, double b, int n, vector<double> &xi, ve
     }
 }
 
-void euler_method(double y0, double a, double b, int n, vector<double> &xi, vector<double> &yi) {
+void euler(double y0, double a, double b, int n, vector<double> &xi, vector<double> &yi) {
     xi.push_back(a);
     yi.push_back(y0);
 
@@ -59,7 +59,7 @@ void euler_method(double y0, double a, double b, int n, vector<double> &xi, vect
     }
 }
 
-void improved_euler_method(double y0, double a, double b, int n, vector<double> &xi, vector<double> &yi) {
+void improved_euler(double y0, double a, double b, int n, vector<double> &xi, vector<double> &yi) {
     xi.push_back(a);
     yi.push_back(y0);
 
@@ -73,7 +73,7 @@ void improved_euler_method(double y0, double a, double b, int n, vector<double> 
     }
 }
 
-void runge_kutta_method(double y0, double a, double b, int n, vector<double> &xi, vector<double> &yi) {
+void runge_kutta(double y0, double a, double b, int n, vector<double> &xi, vector<double> &yi) {
     xi.push_back(a);
     yi.push_back(y0);
 
@@ -109,9 +109,12 @@ void global_errors(void (*function)(double, double, double, int, vector<double> 
 
 
 int main() {
-    double y0 = 0, a = 0, b = M_PI;
-    int n = 10, n1 = 10, n2 = 20, task = 7;
-    // scanf("%d %lf %lf %d", &n, &n1, &n2, &task);
+    double y0 = 0;
+    double a = 0;
+    double b = M_PI;
+
+    int n, n1, n2, task;
+    cin >> n >> n1 >> n2 >> task;
 
     vector<double> xi, yi, ei, ge;
     vector<int> ni;
@@ -127,59 +130,59 @@ int main() {
             print_vector("y(xi)=", yi);
             break;
         case 2:
-            euler_method(y0, a, b, n, xi, yi);
+            euler(y0, a, b, n, xi, yi);
 
             print_vector("xi=", xi);
             print_vector("Euler_yi=", yi);
             break;
         case 3:
-            improved_euler_method(y0, a, b, n, xi, yi);
+            improved_euler(y0, a, b, n, xi, yi);
 
             print_vector("xi=", xi);
             print_vector("iEuler_yi=", yi);
             break;
         case 4:
-            runge_kutta_method(y0, a, b, n, xi, yi);
+            runge_kutta(y0, a, b, n, xi, yi);
 
             print_vector("xi=", xi);
             print_vector("RK4_yi=", yi);
             break;
         case 5:
-            euler_method(y0, a, b, n, xi, yi);
+            euler(y0, a, b, n, xi, yi);
             local_errors(xi, yi, ei);
 
             print_vector("xi=", xi);
             print_vector("Euler_LE(xi)=", ei);
             break;
         case 6:
-            improved_euler_method(y0, a, b, n, xi, yi);
+            improved_euler(y0, a, b, n, xi, yi);
             local_errors(xi, yi, ei);
 
             print_vector("xi=", xi);
             print_vector("iEuler_LE(xi)=", ei);
             break;
         case 7:
-            runge_kutta_method(y0, a, b, n, xi, yi);
+            runge_kutta(y0, a, b, n, xi, yi);
             local_errors(xi, yi, ei);
 
             print_vector("xi=", xi);
             print_vector("RK4_LE(xi)=", ei);
             break;
         case 8:
-            global_errors(euler_method, ge, ni, y0, a, b);
+            global_errors(euler, ge, ni, y0, a, b);
 
             print_vector("ni=", ni);
             print_vector("Euler_GE(n)=", ge);
             break;
         case 9:
-            global_errors(improved_euler_method, ge, ni, y0, a, b);
+            global_errors(improved_euler, ge, ni, y0, a, b);
 
 
             print_vector("ni=", ni);
             print_vector("iEuler_GE(n)=", ge);
             break;
         case 10:
-            global_errors(runge_kutta_method, ge, ni, y0, a, b);
+            global_errors(runge_kutta, ge, ni, y0, a, b);
 
             print_vector("ni=", ni);
             print_vector("RK4_GE(n)=", ge);
