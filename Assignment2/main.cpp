@@ -22,13 +22,6 @@ void print_vector(const string &name, vector<double> &vec) {
     cout << endl;
 }
 
-void print_vector(const string &name, const vector<int> &vec) {
-    cout << name << endl;
-    for (double i: vec) {
-        cout << i << " ";
-    }
-    cout << endl;
-}
 
 void euler(double a, double b, double x0, double y0, int n,
                   vector<double> &xi, vector<double> &yi, vector<double> &ti) {
@@ -122,12 +115,14 @@ int main() {
             print_vector("ti=", ti);
             print_vector("iEuler_xi=", xi);
             print_vector("iEuler_yi=", yi);
+            break;
         case 3:
             runge_kutta(a, b, x0, y0, n, xi, yi, ti);
 
             print_vector("ti=", ti);
             print_vector("RK4_xi=", xi);
             print_vector("RK4_yi=", yi);
+            break;
 
         default:
             cout << "No such task as " << task << "!!!" << endl;
