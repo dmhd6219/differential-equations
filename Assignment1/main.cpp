@@ -149,17 +149,16 @@ void plot_solutions(vector<double> x_exact, vector<double> y_exact,
     pclose(gnuplot);
 }
 
-void plot_errors(
+void plot_local_errors(
                     vector<double> x_euler, vector<double> y_euler,
                     vector<double> x_improved, vector<double> y_improved,
                     vector<double> x_rk, vector<double> y_rk) {
 
     FILE *gnuplot = popen("gnuplot -persist", "w");
 
-    fprintf(gnuplot, "set title 'Numerical Solutions'\n");
+    fprintf(gnuplot, "set title 'Local Errors'\n");
 
-    fprintf(gnuplot, "plot '-' with lines title 'Exact' lw 2, \
-         '-' with lines title 'Euler' lw 2, \
+    fprintf(gnuplot, "plot '-' with lines title 'Euler' lw 2, \
          '-' with lines title 'Improved Euler' lw 2, \
 	     '-' with lines title 'Runge-Kutta' lw 2\n");
 
@@ -185,6 +184,40 @@ void plot_errors(
     pclose(gnuplot);
 }
 
+void plot_global_errors(
+        vector<double> x_euler, vector<double> y_euler,
+        vector<double> x_improved, vector<double> y_improved,
+        vector<double> x_rk, vector<double> y_rk) {
+
+    FILE *gnuplot = popen("gnuplot -persist", "w");
+
+    fprintf(gnuplot, "set title 'Global Errors'\n");
+
+    fprintf(gnuplot, "plot '-' with lines title 'Euler' lw 2, \
+         '-' with lines title 'Improved Euler' lw 2, \
+	     '-' with lines title 'Runge-Kutta' lw 2\n");
+
+
+    // Print Euler solution
+    for(int i = 0; i < x_euler.size(); i++) {
+        fprintf(gnuplot, "%f %f\n", x_euler[i], y_euler[i]);
+    }
+    fprintf(gnuplot, "e\n");
+
+    // Print improved Euler solution
+    for(int i = 0; i < x_improved.size(); i++) {
+        fprintf(gnuplot, "%f %f\n", x_improved[i], y_improved[i]);
+    }
+    fprintf(gnuplot, "e\n");
+
+    // Print Runge-Kutta solution
+    for(int i = 0; i < x_rk.size(); i++) {
+        fprintf(gnuplot, "%f %f\n", x_rk[i], y_rk[i]);
+    }
+    fprintf(gnuplot, "e\n");
+
+    pclose(gnuplot);
+}
 
 int main() {
     double y0 = 0;
@@ -287,14 +320,14 @@ int main() {
     local_errors(ixi, iyi, lei);
     local_errors(rkxi, rkyi, lerk);
 
-    // plot_errors(euxi, leeu, ixi, lei, rkxi, lerk);
+    // plot_local_errors(euxi, leeu, ixi, lei, rkxi, lerk);
 
     vector<double> geeu, gei, gerk;
     global_errors(euler, geeu, ni, y0, a, b);
     global_errors(improved_euler, gei, ni, y0, a, b);
     global_errors(runge_kutta, gerk, ni, y0, a, b);
 
-    plot_errors(euxi, geeu, ixi, gei, rkxi, gerk);
+    // plot_global_errors(euxi, geeu, ixi, gei, rkxi, gerk);
 
     return 0;
 }
