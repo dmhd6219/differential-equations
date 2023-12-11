@@ -149,6 +149,41 @@ void plot_solutions(vector<double> x_exact, vector<double> y_exact,
     pclose(gnuplot);
 }
 
+void plot_errors(
+                    vector<double> x_euler, vector<double> y_euler,
+                    vector<double> x_improved, vector<double> y_improved,
+                    vector<double> x_rk, vector<double> y_rk) {
+
+    FILE *gnuplot = popen("gnuplot -persist", "w");
+
+    fprintf(gnuplot, "set title 'Numerical Solutions'\n");
+
+    fprintf(gnuplot, "plot '-' with lines title 'Exact' lw 2, \
+         '-' with lines title 'Euler' lw 2, \
+         '-' with lines title 'Improved Euler' lw 2, \
+	     '-' with lines title 'Runge-Kutta' lw 2\n");
+
+
+    // Print Euler solution
+    for(int i = 0; i < x_euler.size(); i++) {
+        fprintf(gnuplot, "%f %f\n", x_euler[i], y_euler[i]);
+    }
+    fprintf(gnuplot, "e\n");
+
+    // Print improved Euler solution
+    for(int i = 0; i < x_improved.size(); i++) {
+        fprintf(gnuplot, "%f %f\n", x_improved[i], y_improved[i]);
+    }
+    fprintf(gnuplot, "e\n");
+
+    // Print Runge-Kutta solution
+    for(int i = 0; i < x_rk.size(); i++) {
+        fprintf(gnuplot, "%f %f\n", x_rk[i], y_rk[i]);
+    }
+    fprintf(gnuplot, "e\n");
+
+    pclose(gnuplot);
+}
 
 
 int main() {
@@ -161,8 +196,7 @@ int main() {
     n1 = 20;
     n2 = 40;
     task = 1;
-
-    cin >> n >> n1 >> n2 >> task;
+    // cin >> n >> n1 >> n2 >> task;
 
     vector<double> xi, yi, ei, ge;
     vector<int> ni;
@@ -246,8 +280,21 @@ int main() {
     improved_euler(y0, a, b, n, ixi, iyi);
     runge_kutta(y0, a, b, n, rkxi, rkyi);
 
-    plot_solutions(exi, eyi, euxi, euyi, ixi, iyi, rkxi, rkyi);
+    // plot_solutions(exi, eyi, euxi, euyi, ixi, iyi, rkxi, rkyi);
 
+    vector<double> leeu, lei, lerk;
+    local_errors(euxi, euyi, leeu);
+    local_errors(ixi, iyi, lei);
+    local_errors(rkxi, rkyi, lerk);
+
+    // plot_errors(euxi, leeu, ixi, lei, rkxi, lerk);
+
+    vector<double> geeu, gei, gerk;
+    global_errors(euler, geeu, ni, y0, a, b);
+    global_errors(improved_euler, gei, ni, y0, a, b);
+    global_errors(runge_kutta, gerk, ni, y0, a, b);
+
+    plot_errors(euxi, geeu, ixi, gei, rkxi, gerk);
 
     return 0;
 }
